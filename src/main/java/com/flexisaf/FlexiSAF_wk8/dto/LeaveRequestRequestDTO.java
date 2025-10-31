@@ -1,9 +1,11 @@
 package com.flexisaf.FlexiSAF_wk8.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 public class LeaveRequestRequestDTO {
 
     @NotNull(message = "Employee ID is reqquired")

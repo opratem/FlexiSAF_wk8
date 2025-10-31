@@ -4,33 +4,34 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+
 @Data
 public class EmployeeRequestDTO {
 
-    @NotBlank(message = "First name is required")
-    @Size (max = 50)
+    @NotBlank
+    @Size(max = 50)
     private String firstName;
 
-    @NotBlank(message = "last name is required")
+    @NotBlank
     @Size(max = 50)
     private String lastName;
 
-    @Email(message = "Invalid mail format")
-    @NotBlank(message = "Email is required")
+    @NotBlank
+    @Email
     private String email;
 
     @Size(max = 20)
     private String phoneNumber;
 
     private String department;
+    private String position;
 
-    private String positon;
+    @PositiveOrZero
+    private Double salary;
 
-    @PositiveOrZero(message = "Salary my be non-negative")
-    private double salary;
+    private LocalDate dateOfHire;
 
-    private String status; //FULL_TIME, PART_TIME, CONTRACT
-    private boolean active;
+    private String status; // FULL_TIME, PART_TIME, CONTRACT
+    private Boolean active;
     private String address;
-
 }
