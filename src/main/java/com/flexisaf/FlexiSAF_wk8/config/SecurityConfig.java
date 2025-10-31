@@ -21,9 +21,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .httpBasic() // for simple testing
-                .and()
-                .formLogin(form -> form.disable());
+                .httpBasic(httpBasic -> {})  // ✅ New lambda-based syntax (no deprecation)
+                .formLogin(form -> form.disable()); // ✅ Still disables form login
 
         return http.build();
     }

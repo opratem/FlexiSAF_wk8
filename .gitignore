@@ -31,3 +31,22 @@ build/
 
 ### VS Code ###
 .vscode/
+# Maven target folder
+/target/
+
+# IntelliJ / Eclipse
+.idea/
+*.iml
+*.classpath
+*.project
+.settings/
+
+# Logs and dumps
+*.log
+*.dump
+
+# OS files
+.DS_Store
+
+# Environment
+.env
