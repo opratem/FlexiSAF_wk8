@@ -57,7 +57,18 @@ public class EmployeeController {
     public ResponseEntity<ApiResponse<EmployeeDTO>> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO dto) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
-        BeanUtils.copyProperties(dto, employee, "id", "email");
+
+        // Only update non-null fields (email and id should not be updated)
+        if (dto.getFirstName() != null) employee.setFirstName(dto.getFirstName());
+        if (dto.getLastName() != null) employee.setLastName(dto.getLastName());
+        if (dto.getDepartment() != null) employee.setDepartment(dto.getDepartment());
+        if (dto.getPosition() != null) employee.setPosition(dto.getPosition());
+        if (dto.getSalary() != 0) employee.setSalary(dto.getSalary());
+        if (dto.getDateOfHire() != null) employee.setDateofHire(dto.getDateOfHire());
+        if (dto.getStatus() != null) employee.setStatus(Employee.EmploymentStatus.valueOf(dto.getStatus()));
+        employee.setActive(dto.isActive());
+        if (dto.getAddress() != null) employee.setAddress(dto.getAddress());
+
         Employee updated = employeeRepository.save(employee);
         return ResponseEntity.ok(new ApiResponse<>("Employee updated successfully", convertToDto(updated)));
     }

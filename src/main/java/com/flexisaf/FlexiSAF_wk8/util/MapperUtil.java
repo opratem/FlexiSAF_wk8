@@ -56,7 +56,7 @@ public class MapperUtil {
         }
         dto.setStartDate(l.getStartDate());
         dto.setEndDate(l.getEndDate());
-        dto.setLeaveType(l.getLeavetype() != null ? l.getLeavetype().name() : null);
+        dto.setLeaveType(l.getLeaveType() != null ? l.getLeaveType().name() : null);
         dto.setStatus(l.getStatus() != null ? l.getStatus().name() : null);
         dto.setReason(l.getReason());
         dto.setManagerComment(l.getManagerComment());
@@ -72,7 +72,7 @@ public class MapperUtil {
         l.setEndDate(dto.getEndDate());
         if (dto.getLeaveType() != null) {
             try {
-                l.setLeavetype(LeaveRequest.LeaveType.valueOf(dto.getLeaveType()));
+                l.setLeaveType(LeaveRequest.LeaveType.valueOf(dto.getLeaveType()));
             } catch (IllegalArgumentException ignored) {}
         }
         l.setReason(dto.getReason());

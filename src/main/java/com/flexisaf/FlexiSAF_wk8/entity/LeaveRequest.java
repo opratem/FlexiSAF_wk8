@@ -26,7 +26,7 @@ public class LeaveRequest {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LeaveType leavetype;
+    private LeaveType leaveType;
 
     @Enumerated(EnumType.STRING)
     private LeaveStatus status;

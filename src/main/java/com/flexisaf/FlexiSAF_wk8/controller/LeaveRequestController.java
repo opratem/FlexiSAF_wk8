@@ -49,8 +49,20 @@ public class LeaveRequestController {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
         LeaveRequest leave = new LeaveRequest();
-        BeanUtils.copyProperties(dto, leave);
         leave.setEmployee(employee);
+        leave.setStartDate(dto.getStartDate());
+        leave.setEndDate(dto.getEndDate());
+        if (dto.getLeaveType() != null) {
+            try {
+                leave.setLeaveType(LeaveRequest.LeaveType.valueOf(dto.getLeaveType()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid leave type: " + dto.getLeaveType());
+            }
+        }
+        leave.setReason(dto.getReason());
+        leave.setManagerComment(dto.getManagerComment());
+        leave.setDateApplied(dto.getDateApplied());
+        leave.setDateReviewed(dto.getDateReviewed());
         LeaveRequest saved = leaveRequestRepository.save(leave);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -62,7 +74,21 @@ public class LeaveRequestController {
         LeaveRequest leave = leaveRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Leave request not found"));
 
-        BeanUtils.copyProperties(dto, leave, "id", "employee");
+        // Only update non-null fields
+        if (dto.getStartDate() != null) leave.setStartDate(dto.getStartDate());
+        if (dto.getEndDate() != null) leave.setEndDate(dto.getEndDate());
+        if (dto.getLeaveType() != null) {
+            try {
+                leave.setLeaveType(LeaveRequest.LeaveType.valueOf(dto.getLeaveType()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid leave type: " + dto.getLeaveType());
+            }
+        }
+        if (dto.getReason() != null) leave.setReason(dto.getReason());
+        if (dto.getManagerComment() != null) leave.setManagerComment(dto.getManagerComment());
+        if (dto.getDateApplied() != null) leave.setDateApplied(dto.getDateApplied());
+        if (dto.getDateReviewed() != null) leave.setDateReviewed(dto.getDateReviewed());
+
         LeaveRequest updated = leaveRequestRepository.save(leave);
 
         return ResponseEntity.ok(new ApiResponse<>("Leave updated successfully", convertToDto(updated)));
